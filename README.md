@@ -6,19 +6,25 @@
 # Requirements
 * Python 3.9 or newer
 * NumPy
-* PySCF
 * Gaussian 09 or 16 (optional)
+* PySCF (optional, macOS / Linux / WSL2(Windows Subsystem for Linux))
 
 # Important notice
 * When using Gaussian, the path of the Gaussian must be set.
+* PySCF is supported on macOS and Linux. Windows users must use WSL2.
 
 # Installation
-## Using Gaussian 09 or 16, or PySCF (CPU only)
+## Using Gaussian 09 or 16 (without PySCF)
 ```
 pip install yu-tcal
 ```
 
-## Using GPU acceleration with PySCF
+## Using PySCF (CPU only, macOS / Linux / WSL2)
+```
+pip install yu-tcal[pyscf]
+```
+
+## Using GPU acceleration with PySCF (macOS / Linux / WSL2)
 ### 1. Check your installed CUDA Toolkit version
 ```
 nvcc --version
