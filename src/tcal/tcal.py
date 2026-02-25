@@ -79,7 +79,7 @@ def main():
     args = parser.parse_args()
 
     print('----------------------------------------')
-    print(' tcal 4.0.1 (2026/02/25) by Matsui Lab. ')
+    print(' tcal 4.0.2 (2026/02/25) by Matsui Lab. ')
     print('----------------------------------------')
     print(f'\nInput File Name: {args.file}')
     Tcal.print_timestamp()
@@ -97,9 +97,9 @@ def main():
             print('PySCF is supported on macOS/Linux/WSL2(Windows Subsystem for Linux) only.')
             print('')
             print('Install options:')
-            print('  CPU only:       pip install yu-tcal[pyscf]')
-            print('  GPU (CUDA 12):  pip install yu-tcal[gpu4pyscf-cuda12]')
-            print('  GPU (CUDA 11):  pip install yu-tcal[gpu4pyscf-cuda11]')
+            print('  CPU only:       pip install "yu-tcal[pyscf]"')
+            print('  GPU (CUDA 12):  pip install "yu-tcal[gpu4pyscf-cuda12]"')
+            print('  GPU (CUDA 11):  pip install "yu-tcal[gpu4pyscf-cuda11]"')
             exit(1)
         tcal = TcalPySCF(
             args.file,

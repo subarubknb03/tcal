@@ -377,8 +377,8 @@ class TcalPySCF(Tcal):
                 print('gpu4pyscf is supported on macOS/Linux/WSL2 only.')
                 print('')
                 print('Install options:')
-                print('  GPU (CUDA 12):  pip install yu-tcal[gpu4pyscf-cuda12]')
-                print('  GPU (CUDA 11):  pip install yu-tcal[gpu4pyscf-cuda11]')
+                print('  GPU (CUDA 12):  pip install "yu-tcal[gpu4pyscf-cuda12]"')
+                print('  GPU (CUDA 11):  pip install "yu-tcal[gpu4pyscf-cuda11]"')
                 exit(1)
         else:
             if functional.upper() == 'HF':
@@ -395,6 +395,7 @@ class TcalPySCF(Tcal):
             print(f'WARNING: SCF did not converge for {label}')
         else:
             print(f'{label} calculation completed')
+            lib.chkfile.save(chkfile, 'job_status/completed', True)
             print(f' {chkfile}')
 
         lib.chkfile.save(chkfile, 'tcal/fock', self._to_numpy(mf.get_fock()))
