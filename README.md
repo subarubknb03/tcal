@@ -6,14 +6,38 @@
 # Requirements
 * Python 3.9 or newer
 * NumPy
-* Gaussian 09 or 16
+* Gaussian 09 or 16 (optional)
+* PySCF (optional, macOS / Linux / WSL2(Windows Subsystem for Linux))
 
 # Important notice
-* The path of the Gaussian must be set.
+* When using Gaussian, the path of the Gaussian must be set.
+* PySCF is supported on macOS and Linux. Windows users must use WSL2.
 
 # Installation
+## Using Gaussian 09 or 16 (without PySCF)
 ```
 pip install yu-tcal
+```
+
+## Using PySCF (CPU only, macOS / Linux / WSL2)
+```
+pip install yu-tcal[pyscf]
+```
+
+## Using GPU acceleration with PySCF (macOS / Linux / WSL2)
+### 1. Check your installed CUDA Toolkit version
+```
+nvcc --version
+```
+
+### 2. Install tcal with GPU acceleration
+If your CUDA Toolkit version is 12.x, install tcal with GPU acceleration:  
+```
+pip install yu-tcal[gpu4pyscf-cuda12]
+```
+If your CUDA Toolkit version is 11.x, install tcal with GPU acceleration:  
+```
+pip install yu-tcal[gpu4pyscf-cuda11]
 ```
 
 ## Verify Installation
@@ -32,32 +56,38 @@ tcal --help
 |-l|--lumo|Perform atomic pair transfer analysis of LUMO.|
 |-m|--matrix|Print MO coefficients, overlap matrix and Fock matrix.|
 |-o|--output|Output csv file on the result of apta.|
-|-r|--read|Read log files without executing Gaussian.|
-|-x|--xyz|Convert xyz file to gjf file.|
+|-r|--read|Read log/checkpoint files without executing calculations.|
+|-x|--xyz|Convert xyz file to gjf file. (Gaussian only)|
+|-M|--method METHOD/BASIS|Calculation method and basis set in "METHOD/BASIS" format. (default: B3LYP/6-31G(d,p))|
+||--cpu N|Set the number of CPUs. (default: 4)|
+||--mem N|Set the memory size in GB. (default: 16)|
 ||--napta N1 N2|Perform atomic pair transfer analysis between different levels. N1 is the number of level in the first monomer. N2 is the number of level in the second monomer.|
 ||--hetero N|Calculate the transfer integral of heterodimer. N is the number of atoms in the first monomer.|
 ||--nlevel N|Calculate transfer integrals between different levels. N is the number of levels from HOMO-LUMO. N=0 gives all levels.|
-||--skip N...|Skip specified Gaussian calculation. If N is 1, skip 1st monomer calculation. If N is 2, skip 2nd monomer calculation. If N is 3, skip dimer calculation.|
+||--skip N...|Skip specified calculation. If N is 1, skip 1st monomer calculation. If N is 2, skip 2nd monomer calculation. If N is 3, skip dimer calculation.|
+||--pyscf|Use PySCF instead of Gaussian. Input file must be an xyz file.|
+||--gpu4pyscf|Use GPU acceleration via gpu4pyscf. (PySCF only)|
 
 # How to use
-## 1. Create gjf file
+## Using Gaussian
+### 1. Create gjf file
 First of all, create a gaussian input file as follows:  
 ex: xxx.gjf  
 ![gjf_file_example](img/gjf_file_example.png)  
 The xxx part is an arbitrary string.
 
-### Description of link commands
+#### Description of link commands
 **pop=full**: Required to output coefficients of basis functions, overlap matrix, and Fock matrix.  
 **iop(3/33=4,5/33=3)**: Required to output coefficients of basis functions, overlap matrix, and Fock matrix.  
 
-### How to create a gjf using Mercury
+#### How to create a gjf using Mercury
 1. Open cif file in Mercury.  
 2. Display the dimer you want to calculate.  
 ![Anthracene_dimer](img/Anthracene_dimer.png)  
 3. Save in mol file or mol2 file.  
 4. Open a mol file or mol2 file in GaussView and save it in gjf format.  
 
-## 2. Execute tcal.py
+### 2. Execute tcal
 Suppose the directory structure is as follows.  
 ```
 yyy
@@ -69,13 +99,13 @@ yyy
 cd yyy
 ```
 3. Execute the following command.
-```python
+```
 tcal -a xxx.gjf
 ```
 
-## 3. Visualization of molecular orbitals
+### 3. Visualization of molecular orbitals
 1. Execute the following command.
-```python
+```
 tcal -cr xxx.gjf
 ```
 2. Open xxx.fchk in GaussView.
@@ -87,6 +117,29 @@ tcal -cr xxx.gjf
 6. Visualize by operating [Surface Actions] &rarr; [New Surface].
 ![visualize3](img/visualize3.png)  
 ![visualize4](img/visualize4.png)  
+
+## Using PySCF
+### 1. Create xyz file
+Prepare an xyz file of the dimer structure.  
+The first half of the atoms are treated as monomer 1, and the second half as monomer 2.  
+For heterodimers, use the `--hetero N` option to specify the number of atoms in the first monomer.
+
+### 2. Execute tcal
+```
+tcal --pyscf -a xxx.xyz
+```
+To specify a calculation method and basis set:
+```
+tcal --pyscf -M "B3LYP/6-31G(d,p)" -a xxx.xyz
+```
+To use GPU acceleration:
+```
+tcal --gpu4pyscf -M "B3LYP/6-31G(d,p)" -a xxx.xyz
+```
+To read from existing checkpoint files without re-running calculations:
+```
+tcal --pyscf -ar xxx.xyz
+```
 
 # Interatomic transfer integral
 For calculating the transfer integral between molecule A and molecule B, DFT calculations were performed for monomer A, monomer B, and the dimer AB. The monomer molecular orbitals $\ket{A}$ and $\ket{B}$ were obtained from the monomer calculations. Fock matrix F was calculated in the dimer system. Finally the intermolecular transfer integral $t^{[1]}$ was calculated by using the following equation:  

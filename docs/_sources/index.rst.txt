@@ -15,18 +15,54 @@ Requirements
 
 * Python 3.9 or newer
 * NumPy
-* Gaussian 09 or 16
+* Gaussian 09 or 16 (optional)
+* PySCF (optional, macOS / Linux / WSL2(Windows Subsystem for Linux))
 
 .. important::
-   The path of the Gaussian must be set.
+   When using Gaussian, the path of the Gaussian must be set.
+
+.. important::
+   PySCF is supported on macOS and Linux. Windows users must use WSL2.
 
 Installation
 ============
+
+Using Gaussian 09 or 16 (without PySCF)
+-----------------------------------------
 
 .. code-block:: bash
 
    pip install yu-tcal
 
+Using PySCF (CPU only, macOS / Linux / WSL2)
+----------------------------------------------
+
+.. code-block:: bash
+
+   pip install yu-tcal[pyscf]
+
+Using GPU acceleration with PySCF (macOS / Linux / WSL2)
+----------------------------------------------------------
+
+1. Check your installed CUDA Toolkit version:
+
+   .. code-block:: bash
+
+      nvcc --version
+
+2. Install tcal with GPU acceleration:
+
+   If your CUDA Toolkit version is 12.x:
+
+   .. code-block:: bash
+
+      pip install yu-tcal[gpu4pyscf-cuda12]
+
+   If your CUDA Toolkit version is 11.x:
+
+   .. code-block:: bash
+
+      pip install yu-tcal[gpu4pyscf-cuda11]
 
 Verify Installation
 -------------------
@@ -70,10 +106,19 @@ Options
      - Output csv file on the result of apta.
    * - ``-r``
      - ``--read``
-     - Read log files without executing Gaussian.
+     - Read log/checkpoint files without executing calculations.
    * - ``-x``
      - ``--xyz``
-     - Convert xyz file to gjf file.
+     - Convert xyz file to gjf file. (Gaussian only)
+   * - ``-M``
+     - ``--method METHOD/BASIS``
+     - Calculation method and basis set in "METHOD/BASIS" format. (default: B3LYP/6-31G(d,p))
+   * -
+     - ``--cpu N``
+     - Set the number of CPUs. (default: 4)
+   * -
+     - ``--mem N``
+     - Set the memory size in GB. (default: 16)
    * -
      - ``--napta N1 N2``
      - Perform atomic pair transfer analysis between different levels. N1 is the number of level in the first monomer. N2 is the number of level in the second monomer.
@@ -85,13 +130,22 @@ Options
      - Calculate transfer integrals between different levels. N is the number of levels from HOMO-LUMO. N=0 gives all levels.
    * -
      - ``--skip N...``
-     - Skip specified Gaussian calculation. If N is 1, skip 1st monomer calculation. If N is 2, skip 2nd monomer calculation. If N is 3, skip dimer calculation.
+     - Skip specified calculation. If N is 1, skip 1st monomer calculation. If N is 2, skip 2nd monomer calculation. If N is 3, skip dimer calculation.
+   * -
+     - ``--pyscf``
+     - Use PySCF instead of Gaussian. Input file must be an xyz file.
+   * -
+     - ``--gpu4pyscf``
+     - Use GPU acceleration via gpu4pyscf. (PySCF only)
 
 How to Use
 ==========
 
+Using Gaussian
+--------------
+
 1. Create gjf file
-------------------
+~~~~~~~~~~~~~~~~~~~
 
 First of all, create a gaussian input file as follows:
 
@@ -103,7 +157,7 @@ First of all, create a gaussian input file as follows:
 The xxx part is an arbitrary string.
 
 Description of link commands
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **pop=full**
    Required to output coefficients of basis functions, overlap matrix, and Fock matrix.
@@ -112,7 +166,7 @@ Description of link commands
    Required to output coefficients of basis functions, overlap matrix, and Fock matrix.
 
 How to create a gjf using Mercury
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Open cif file in Mercury.
 2. Display the dimer you want to calculate.
@@ -124,7 +178,7 @@ How to create a gjf using Mercury
 4. Open a mol file or mol2 file in GaussView and save it in gjf format.
 
 2. Execute tcal
----------------
+~~~~~~~~~~~~~~~~
 
 Suppose the directory structure is as follows:
 
@@ -147,7 +201,7 @@ Suppose the directory structure is as follows:
       tcal -a xxx.gjf
 
 3. Visualization of molecular orbitals
---------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Execute the following command.
 
@@ -174,6 +228,41 @@ Suppose the directory structure is as follows:
 
    .. image:: https://raw.githubusercontent.com/matsui-lab-yamagata/tcal/main/img/visualize4.png
       :alt: Visualize 4
+
+Using PySCF
+-----------
+
+1. Create xyz file
+~~~~~~~~~~~~~~~~~~~
+
+Prepare an xyz file of the dimer structure.
+The first half of the atoms are treated as monomer 1, and the second half as monomer 2.
+For heterodimers, use the ``--hetero N`` option to specify the number of atoms in the first monomer.
+
+2. Execute tcal
+~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   tcal --pyscf -a xxx.xyz
+
+To specify a calculation method and basis set:
+
+.. code-block:: bash
+
+   tcal --pyscf -M "B3LYP/6-31G(d,p)" -a xxx.xyz
+
+To use GPU acceleration:
+
+.. code-block:: bash
+
+   tcal --gpu4pyscf -M "B3LYP/6-31G(d,p)" -a xxx.xyz
+
+To read from existing checkpoint files without re-running calculations:
+
+.. code-block:: bash
+
+   tcal --pyscf -ar xxx.xyz
 
 Interatomic Transfer Integral
 ==============================
