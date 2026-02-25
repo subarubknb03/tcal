@@ -21,7 +21,7 @@ pip install yu-tcal
 
 ## Using PySCF (CPU only, macOS / Linux / WSL2)
 ```
-pip install yu-tcal[pyscf]
+pip install "yu-tcal[pyscf]"
 ```
 
 ## Using GPU acceleration with PySCF (macOS / Linux / WSL2)
@@ -33,11 +33,11 @@ nvcc --version
 ### 2. Install tcal with GPU acceleration
 If your CUDA Toolkit version is 12.x, install tcal with GPU acceleration:  
 ```
-pip install yu-tcal[gpu4pyscf-cuda12]
+pip install "yu-tcal[gpu4pyscf-cuda12]"
 ```
 If your CUDA Toolkit version is 11.x, install tcal with GPU acceleration:  
 ```
-pip install yu-tcal[gpu4pyscf-cuda11]
+pip install "yu-tcal[gpu4pyscf-cuda11]"
 ```
 
 ## Verify Installation
