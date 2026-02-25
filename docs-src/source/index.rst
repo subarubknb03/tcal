@@ -304,6 +304,8 @@ References
 
 [2] Koki Ozawa et al., Statistical analysis of interatomic transfer integrals for exploring high-mobility organic semiconductors, *Sci. Technol. Adv. Mater.* **2024**, *25*, 2354652.
 
+[3] Qiming Sun et al., Recent developments in the PySCF program package, *J. Chem. Phys.* **2020**, *153*, 024109.
+
 Citation
 ========
 
