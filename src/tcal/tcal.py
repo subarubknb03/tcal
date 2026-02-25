@@ -45,7 +45,7 @@ def main():
         '-r', '--read', help='read log/checkpoint files without executing calculations', action='store_true'
     )
     parser.add_argument('-x', '--xyz', help='convert xyz to gjf (Gaussian only)', action='store_true')
-    parser.add_argument('-M', '--method', help='calculation method and basis set in "METHOD/BASIS" format (default: B3LYP/6-31G(d,p))', type=str, default='B3LYP/6-31G(d,p)')
+    parser.add_argument('-M', '--method', help='calculation method and basis set in "METHOD/BASIS" format (default is B3LYP/6-31G(d,p))', type=str, default='B3LYP/6-31G(d,p)')
     parser.add_argument('--cpu', help='setting the number of CPUs (default is 4)', type=int, default=4)
     parser.add_argument('--mem', help='setting the memory size [GB] (default is 16GB)', type=int, default=16)
     parser.add_argument(
