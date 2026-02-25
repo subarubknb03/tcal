@@ -1,6 +1,6 @@
 [project]
 name = "yu-tcal"
-version = "4.0.0"
+version = "4.0.1"
 description = "Add your description here"
 requires-python = ">=3.9"
 dependencies = [
