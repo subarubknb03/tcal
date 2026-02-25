@@ -312,7 +312,7 @@
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------------------&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; tcal 4.0.0 (2026/02/23) by Matsui Lab. &#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; tcal 4.0.0 (2026/02/25) by Matsui Lab. &#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------------------&#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Input File Name: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">Tcal</span><span class="o">.</span><span class="n">print_timestamp</span><span class="p">()</span>
@@ -323,7 +323,17 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: --xyz is ignored when --pyscf is used.&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">pyscf</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">gpu4pyscf</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">tcal.tcal_pyscf</span><span class="w"> </span><span class="kn">import</span> <span class="n">TcalPySCF</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">tcal.tcal_pyscf</span><span class="w"> </span><span class="kn">import</span> <span class="n">TcalPySCF</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error: PySCF is not installed.&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PySCF is supported on macOS/Linux/WSL2(Windows Subsystem for Linux) only.&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Install options:&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  CPU only:       pip install yu-tcal[pyscf]&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 12):  pip install yu-tcal[gpu4pyscf-cuda12]&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 11):  pip install yu-tcal[gpu4pyscf-cuda11]&#39;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">tcal</span> <span class="o">=</span> <span class="n">TcalPySCF</span><span class="p">(</span>
             <span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
             <span class="n">monomer1_atom_num</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">hetero</span><span class="p">,</span>
