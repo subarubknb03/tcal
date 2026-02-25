@@ -1,10 +1,11 @@
 [project]
 name = "yu-tcal"
-version = "3.1.0"
+version = "4.0.0"
 description = "Add your description here"
 requires-python = ">=3.9"
 dependencies = [
     "numpy>=2.0.2",
+    "pyscf>=2.12.1",
 ]
 authors = [
     {name = "Hiroyuki Matsui", email = "h-matsui@yz.yamagata-u.ac.jp"},
@@ -48,6 +49,16 @@ docs-generate = "sphinx-apidoc -f -o docs-src/source src && sphinx-build -M clea
 
 [project.scripts]
 tcal = "tcal.tcal:main"
+
+[project.optional-dependencies]
+gpu4pyscf-cuda11 = [
+    "cutensor-cu11>=2.2.0",
+    "gpu4pyscf-cuda11x>=1.5.2",
+]
+gpu4pyscf-cuda12 = [
+    "cutensor-cu12>=2.5.0",
+    "gpu4pyscf-cuda12x>=1.5.2",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
