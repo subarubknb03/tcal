@@ -1764,17 +1764,21 @@ dependencies = [
     { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
     { name = "numpy", version = "2.4.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "pyscf" },
 ]
 
 [package.optional-dependencies]
 gpu4pyscf-cuda11 = [
     { name = "cutensor-cu11" },
     { name = "gpu4pyscf-cuda11x" },
+    { name = "pyscf" },
 ]
 gpu4pyscf-cuda12 = [
     { name = "cutensor-cu12" },
     { name = "gpu4pyscf-cuda12x" },
+    { name = "pyscf" },
+]
+pyscf = [
+    { name = "pyscf" },
 ]
 
 [package.dev-dependencies]
@@ -1795,9 +1799,11 @@ requires-dist = [
     { name = "gpu4pyscf-cuda11x", marker = "extra == 'gpu4pyscf-cuda11'", specifier = ">=1.5.2" },
     { name = "gpu4pyscf-cuda12x", marker = "extra == 'gpu4pyscf-cuda12'", specifier = ">=1.5.2" },
     { name = "numpy", specifier = ">=2.0.2" },
-    { name = "pyscf", specifier = ">=2.12.1" },
+    { name = "pyscf", marker = "extra == 'gpu4pyscf-cuda11'", specifier = ">=2.12.1" },
+    { name = "pyscf", marker = "extra == 'gpu4pyscf-cuda12'", specifier = ">=2.12.1" },
+    { name = "pyscf", marker = "extra == 'pyscf'", specifier = ">=2.12.1" },
 ]
-provides-extras = ["gpu4pyscf-cuda11", "gpu4pyscf-cuda12"]
+provides-extras = ["pyscf", "gpu4pyscf-cuda11", "gpu4pyscf-cuda12"]
 
 [package.metadata.requires-dev]
 dev = [
