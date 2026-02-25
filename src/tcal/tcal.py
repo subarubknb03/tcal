@@ -42,9 +42,12 @@ def main():
         help='output csv file on the result of apta and transfer integrals between diffrent orbitals etc.',
     )
     parser.add_argument(
-        '-r', '--read', help='read log files without executing Gaussian', action='store_true'
+        '-r', '--read', help='read log/checkpoint files without executing calculations', action='store_true'
     )
-    parser.add_argument('-x', '--xyz', help='convert xyz to gjf', action='store_true')
+    parser.add_argument('-x', '--xyz', help='convert xyz to gjf (Gaussian only)', action='store_true')
+    parser.add_argument('-M', '--method', help='calculation method and basis set in "METHOD/BASIS" format', type=str, default='B3LYP/6-31G(d,p)')
+    parser.add_argument('--cpu', help='setting the number of CPUs (default is 4)', type=int, default=4)
+    parser.add_argument('--mem', help='setting the memory size [GB] (default is 16GB)', type=int, default=16)
     parser.add_argument(
         '--napta', type=int, nargs=2, metavar=('N1', 'N2'),
         help='perform atomic pair transfer analysis between different levels. ' \
@@ -61,43 +64,67 @@ def main():
     )
     parser.add_argument(
         '--skip', type=int, nargs='+', default=[0], metavar='N', choices=[1, 2, 3],
-        help='skip specified Gaussian calculation. If N is 1, skip 1st monomer calculation. ' \
+        help='skip specified calculation. If N is 1, skip 1st monomer calculation. ' \
         + 'If N is 2, skip 2nd monomer calculation. If N is 3, skip dimer calculation.'
+    )
+    parser.add_argument(
+        '--pyscf', help='use PySCF instead of Gaussian (input file must be an xyz file)', action='store_true'
+    )
+    parser.add_argument(
+        '--gpu4pyscf', help='use GPU acceleration via gpu4pyscf (PySCF only)', action='store_true'
+    )
+    parser.add_argument(
+        '--cart', help='use Cartesian basis functions (PySCF only)', action='store_true'
     )
     args = parser.parse_args()
 
     print('----------------------------------------')
-    print(' tcal 3.1.0 (2026/01/20) by Matsui Lab. ')
+    print(' tcal 4.0.0 (2026/02/23) by Matsui Lab. ')
     print('----------------------------------------')
     print(f'\nInput File Name: {args.file}')
     Tcal.print_timestamp()
     before = time()
     print()
 
-    tcal = Tcal(args.file, monomer1_atom_num=args.hetero)
+    if (args.pyscf or args.gpu4pyscf) and args.xyz:
+        print('WARNING: --xyz is ignored when --pyscf is used.')
 
-    # convert xyz to gjf
-    if args.xyz:
-        tcal.convert_xyz_to_gjf()
+    if args.pyscf or args.gpu4pyscf:
+        from tcal.tcal_pyscf import TcalPySCF
+        tcal = TcalPySCF(
+            args.file,
+            monomer1_atom_num=args.hetero,
+            method=args.method,
+            use_gpu=args.gpu4pyscf,
+            ncore=args.cpu,
+            max_memory_gb=args.mem,
+            cart=args.cart,
+        )
+        if not args.read:
+            tcal.run_pyscf(skip_monomer_num=args.skip)
+    else:
+        tcal = Tcal(args.file, monomer1_atom_num=args.hetero)
 
-    if not args.read:
-        tcal.create_monomer_file()
+        # convert xyz to gjf
+        if args.xyz:
+            tcal.convert_xyz_to_gjf(function=args.method, nprocshared=args.cpu, mem=args.mem)
 
-        if args.g09:
-            gaussian_command = 'g09'
-        else:
-            gaussian_command = 'g16'
-        res = tcal.run_gaussian(gaussian_command, skip_monomer_num=args.skip)
+        if not args.read:
+            tcal.create_monomer_file()
 
-        if res:
-            print()
-            Tcal.print_timestamp()
-            after = time()
-            print(f'Elapsed Time: {(after - before) * 1000:.0f} ms')
-            exit()
+            gaussian_command = 'g09' if args.g09 else 'g16'
+            res = tcal.run_gaussian(gaussian_command, skip_monomer_num=args.skip)
+
+            if res:
+                print()
+                Tcal.print_timestamp()
+                after = time()
+                print(f'Elapsed Time: {(after - before) * 1000:.0f} ms')
+                exit()
 
     try:
-        tcal.check_extension_log()
+        if not (args.pyscf or args.gpu4pyscf):
+            tcal.check_extension_log()
         tcal.read_monomer1(args.matrix)
         tcal.read_monomer2(args.matrix)
         tcal.read_dimer(args.matrix)
