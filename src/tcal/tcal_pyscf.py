@@ -372,10 +372,14 @@ class TcalPySCF(Tcal):
                     from gpu4pyscf.dft import rks as gpu_rks
                     mf = gpu_rks.RKS(mol)
                     mf.xc = functional
-            except ImportError as e:
-                raise ImportError(
-                    'gpu4pyscf is required for use_gpu=True. Install it with: pip install gpu4pyscf'
-                ) from e
+            except ImportError:
+                print('Error: gpu4pyscf is not installed.')
+                print('gpu4pyscf is supported on macOS/Linux/WSL2 only.')
+                print('')
+                print('Install options:')
+                print('  GPU (CUDA 12):  pip install yu-tcal[gpu4pyscf-cuda12]')
+                print('  GPU (CUDA 11):  pip install yu-tcal[gpu4pyscf-cuda11]')
+                exit(1)
         else:
             if functional.upper() == 'HF':
                 mf = scf.RHF(mol)
