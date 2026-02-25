@@ -39,7 +39,7 @@ Using PySCF (CPU only, macOS / Linux / WSL2)
 
 .. code-block:: bash
 
-   pip install yu-tcal[pyscf]
+   pip install "yu-tcal[pyscf]"
 
 Using GPU acceleration with PySCF (macOS / Linux / WSL2)
 ----------------------------------------------------------
@@ -56,13 +56,13 @@ Using GPU acceleration with PySCF (macOS / Linux / WSL2)
 
    .. code-block:: bash
 
-      pip install yu-tcal[gpu4pyscf-cuda12]
+      pip install "yu-tcal[gpu4pyscf-cuda12]"
 
    If your CUDA Toolkit version is 11.x:
 
    .. code-block:: bash
 
-      pip install yu-tcal[gpu4pyscf-cuda11]
+      pip install "yu-tcal[gpu4pyscf-cuda11]"
 
 Verify Installation
 -------------------
