@@ -626,6 +626,78 @@ If it is 3, skip dimer calculation.</p></li>
 </dd></dl>
 
 </section>
+<section id="module-tcal.tcal_pyscf">
+<span id="tcal-tcal-pyscf-module"></span><h2>tcal.tcal_pyscf module<a class="headerlink" href="#module-tcal.tcal_pyscf" title="Link to this heading">¶</a></h2>
+<p>TcalPySCF</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="tcal.tcal_pyscf.TcalPySCF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tcal.tcal_pyscf.</span></span><span class="sig-name descname"><span class="pre">TcalPySCF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monomer1_atom_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'B3LYP/6-31G(d,p)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncore</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_memory_gb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.tcal_pyscf.TcalPySCF" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tcal.tcal.Tcal" title="tcal.tcal.Tcal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tcal</span></code></a></p>
+<p>Calculate transfer integrals using PySCF.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.tcal_pyscf.TcalPySCF.create_cube_file">
+<span class="sig-name descname"><span class="pre">create_cube_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.create_cube_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.tcal_pyscf.TcalPySCF.create_cube_file" title="Link to this definition">¶</a></dt>
+<dd><p>Generate NHOMO/HOMO/LUMO/NLUMO cube files for both monomers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.tcal_pyscf.TcalPySCF.read_dimer">
+<span class="sig-name descname"><span class="pre">read_dimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.read_dimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.tcal_pyscf.TcalPySCF.read_dimer" title="Link to this definition">¶</a></dt>
+<dd><p>Extract overlap and Fock matrix from PySCF result of dimer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_matrix</strong> (<em>bool</em>) – If True, print overlap and Fock matrices. default False</p></li>
+<li><p><strong>output_matrix</strong> (<em>bool</em>) – If True, output overlap and Fock matrices to CSV. default False</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.tcal_pyscf.TcalPySCF.read_monomer1">
+<span class="sig-name descname"><span class="pre">read_monomer1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.read_monomer1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.tcal_pyscf.TcalPySCF.read_monomer1" title="Link to this definition">¶</a></dt>
+<dd><p>Extract MO coefficients from PySCF result of monomer 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_matrix</strong> (<em>bool</em>) – If True, print MO coefficients. default False</p></li>
+<li><p><strong>output_matrix</strong> (<em>bool</em>) – If True, output MO coefficients to CSV. default False</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.tcal_pyscf.TcalPySCF.read_monomer2">
+<span class="sig-name descname"><span class="pre">read_monomer2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.read_monomer2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.tcal_pyscf.TcalPySCF.read_monomer2" title="Link to this definition">¶</a></dt>
+<dd><p>Extract MO coefficients from PySCF result of monomer 2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_matrix</strong> (<em>bool</em>) – If True, print MO coefficients. default False</p></li>
+<li><p><strong>output_matrix</strong> (<em>bool</em>) – If True, output MO coefficients to CSV. default False</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.tcal_pyscf.TcalPySCF.run_pyscf">
+<span class="sig-name descname"><span class="pre">run_pyscf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_monomer_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.run_pyscf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.tcal_pyscf.TcalPySCF.run_pyscf" title="Link to this definition">¶</a></dt>
+<dd><p>Run PySCF calculations for monomers and dimer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>skip_monomer_num</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – If 1 is in the list, skip 1st monomer calculation.
+If 2 is in the list, skip 2nd monomer calculation.
+If 3 is in the list, skip dimer calculation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-tcal">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tcal" title="Link to this heading">¶</a></h2>
 <dl class="py class">
@@ -1004,6 +1076,74 @@ If it is 3, skip dimer calculation.</p></li>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="tcal.TcalPySCF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tcal.</span></span><span class="sig-name descname"><span class="pre">TcalPySCF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monomer1_atom_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'B3LYP/6-31G(d,p)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncore</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_memory_gb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cart</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.TcalPySCF" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tcal.tcal.Tcal" title="tcal.tcal.Tcal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tcal</span></code></a></p>
+<p>Calculate transfer integrals using PySCF.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.TcalPySCF.create_cube_file">
+<span class="sig-name descname"><span class="pre">create_cube_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.create_cube_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.TcalPySCF.create_cube_file" title="Link to this definition">¶</a></dt>
+<dd><p>Generate NHOMO/HOMO/LUMO/NLUMO cube files for both monomers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.TcalPySCF.read_dimer">
+<span class="sig-name descname"><span class="pre">read_dimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.read_dimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.TcalPySCF.read_dimer" title="Link to this definition">¶</a></dt>
+<dd><p>Extract overlap and Fock matrix from PySCF result of dimer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_matrix</strong> (<em>bool</em>) – If True, print overlap and Fock matrices. default False</p></li>
+<li><p><strong>output_matrix</strong> (<em>bool</em>) – If True, output overlap and Fock matrices to CSV. default False</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.TcalPySCF.read_monomer1">
+<span class="sig-name descname"><span class="pre">read_monomer1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.read_monomer1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.TcalPySCF.read_monomer1" title="Link to this definition">¶</a></dt>
+<dd><p>Extract MO coefficients from PySCF result of monomer 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_matrix</strong> (<em>bool</em>) – If True, print MO coefficients. default False</p></li>
+<li><p><strong>output_matrix</strong> (<em>bool</em>) – If True, output MO coefficients to CSV. default False</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.TcalPySCF.read_monomer2">
+<span class="sig-name descname"><span class="pre">read_monomer2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.read_monomer2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.TcalPySCF.read_monomer2" title="Link to this definition">¶</a></dt>
+<dd><p>Extract MO coefficients from PySCF result of monomer 2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_matrix</strong> (<em>bool</em>) – If True, print MO coefficients. default False</p></li>
+<li><p><strong>output_matrix</strong> (<em>bool</em>) – If True, output MO coefficients to CSV. default False</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tcal.TcalPySCF.run_pyscf">
+<span class="sig-name descname"><span class="pre">run_pyscf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_monomer_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tcal/tcal_pyscf.html#TcalPySCF.run_pyscf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tcal.TcalPySCF.run_pyscf" title="Link to this definition">¶</a></dt>
+<dd><p>Run PySCF calculations for monomers and dimer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>skip_monomer_num</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – If 1 is in the list, skip 1st monomer calculation.
+If 2 is in the list, skip 2nd monomer calculation.
+If 3 is in the list, skip dimer calculation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -1091,6 +1231,17 @@ If it is 3, skip dimer calculation.</p></li>
 <li><a class="reference internal" href="#tcal.tcal.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-tcal.tcal_pyscf">tcal.tcal_pyscf module</a><ul>
+<li><a class="reference internal" href="#tcal.tcal_pyscf.TcalPySCF"><code class="docutils literal notranslate"><span class="pre">TcalPySCF</span></code></a><ul>
+<li><a class="reference internal" href="#tcal.tcal_pyscf.TcalPySCF.create_cube_file"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.create_cube_file()</span></code></a></li>
+<li><a class="reference internal" href="#tcal.tcal_pyscf.TcalPySCF.read_dimer"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.read_dimer()</span></code></a></li>
+<li><a class="reference internal" href="#tcal.tcal_pyscf.TcalPySCF.read_monomer1"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.read_monomer1()</span></code></a></li>
+<li><a class="reference internal" href="#tcal.tcal_pyscf.TcalPySCF.read_monomer2"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.read_monomer2()</span></code></a></li>
+<li><a class="reference internal" href="#tcal.tcal_pyscf.TcalPySCF.run_pyscf"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.run_pyscf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-tcal">Module contents</a><ul>
 <li><a class="reference internal" href="#tcal.PairAnalysis"><code class="docutils literal notranslate"><span class="pre">PairAnalysis</span></code></a><ul>
 <li><a class="reference internal" href="#tcal.PairAnalysis.print_element_pairs"><code class="docutils literal notranslate"><span class="pre">PairAnalysis.print_element_pairs()</span></code></a></li>
@@ -1121,6 +1272,14 @@ If it is 3, skip dimer calculation.</p></li>
 <li><a class="reference internal" href="#tcal.Tcal.read_monomer2"><code class="docutils literal notranslate"><span class="pre">Tcal.read_monomer2()</span></code></a></li>
 <li><a class="reference internal" href="#tcal.Tcal.read_symmetric_matrix"><code class="docutils literal notranslate"><span class="pre">Tcal.read_symmetric_matrix()</span></code></a></li>
 <li><a class="reference internal" href="#tcal.Tcal.run_gaussian"><code class="docutils literal notranslate"><span class="pre">Tcal.run_gaussian()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tcal.TcalPySCF"><code class="docutils literal notranslate"><span class="pre">TcalPySCF</span></code></a><ul>
+<li><a class="reference internal" href="#tcal.TcalPySCF.create_cube_file"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.create_cube_file()</span></code></a></li>
+<li><a class="reference internal" href="#tcal.TcalPySCF.read_dimer"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.read_dimer()</span></code></a></li>
+<li><a class="reference internal" href="#tcal.TcalPySCF.read_monomer1"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.read_monomer1()</span></code></a></li>
+<li><a class="reference internal" href="#tcal.TcalPySCF.read_monomer2"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.read_monomer2()</span></code></a></li>
+<li><a class="reference internal" href="#tcal.TcalPySCF.run_pyscf"><code class="docutils literal notranslate"><span class="pre">TcalPySCF.run_pyscf()</span></code></a></li>
 </ul>
 </li>
 </ul>

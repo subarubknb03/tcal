@@ -275,9 +275,12 @@
         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;output csv file on the result of apta and transfer integrals between diffrent orbitals etc.&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="s1">&#39;--read&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;read log files without executing Gaussian&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span>
+        <span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="s1">&#39;--read&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;read log/checkpoint files without executing calculations&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span>
     <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-x&#39;</span><span class="p">,</span> <span class="s1">&#39;--xyz&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;convert xyz to gjf&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-x&#39;</span><span class="p">,</span> <span class="s1">&#39;--xyz&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;convert xyz to gjf (Gaussian only)&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-M&#39;</span><span class="p">,</span> <span class="s1">&#39;--method&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;calculation method and basis set in &quot;METHOD/BASIS&quot; format&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;B3LYP/6-31G(d,p)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--cpu&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;setting the number of CPUs (default is 4)&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--mem&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;setting the memory size [GB] (default is 16GB)&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s1">&#39;--napta&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;N1&#39;</span><span class="p">,</span> <span class="s1">&#39;N2&#39;</span><span class="p">),</span>
         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;perform atomic pair transfer analysis between different levels. &#39;</span> \
@@ -294,43 +297,67 @@
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s1">&#39;--skip&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;skip specified Gaussian calculation. If N is 1, skip 1st monomer calculation. &#39;</span> \
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;skip specified calculation. If N is 1, skip 1st monomer calculation. &#39;</span> \
         <span class="o">+</span> <span class="s1">&#39;If N is 2, skip 2nd monomer calculation. If N is 3, skip dimer calculation.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--pyscf&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;use PySCF instead of Gaussian (input file must be an xyz file)&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--gpu4pyscf&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;use GPU acceleration via gpu4pyscf (PySCF only)&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--cart&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;use Cartesian basis functions (PySCF only)&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span>
     <span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------------------&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; tcal 3.1.0 (2026/01/20) by Matsui Lab. &#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; tcal 4.0.0 (2026/02/23) by Matsui Lab. &#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------------------&#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Input File Name: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">Tcal</span><span class="o">.</span><span class="n">print_timestamp</span><span class="p">()</span>
     <span class="n">before</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">()</span>
 
-    <span class="n">tcal</span> <span class="o">=</span> <span class="n">Tcal</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">monomer1_atom_num</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">hetero</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">pyscf</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">gpu4pyscf</span><span class="p">)</span> <span class="ow">and</span> <span class="n">args</span><span class="o">.</span><span class="n">xyz</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: --xyz is ignored when --pyscf is used.&#39;</span><span class="p">)</span>
 
-    <span class="c1"># convert xyz to gjf</span>
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">xyz</span><span class="p">:</span>
-        <span class="n">tcal</span><span class="o">.</span><span class="n">convert_xyz_to_gjf</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">pyscf</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">gpu4pyscf</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">tcal.tcal_pyscf</span><span class="w"> </span><span class="kn">import</span> <span class="n">TcalPySCF</span>
+        <span class="n">tcal</span> <span class="o">=</span> <span class="n">TcalPySCF</span><span class="p">(</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
+            <span class="n">monomer1_atom_num</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">hetero</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+            <span class="n">use_gpu</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">gpu4pyscf</span><span class="p">,</span>
+            <span class="n">ncore</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cpu</span><span class="p">,</span>
+            <span class="n">max_memory_gb</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">mem</span><span class="p">,</span>
+            <span class="n">cart</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cart</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">read</span><span class="p">:</span>
+            <span class="n">tcal</span><span class="o">.</span><span class="n">run_pyscf</span><span class="p">(</span><span class="n">skip_monomer_num</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">skip</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tcal</span> <span class="o">=</span> <span class="n">Tcal</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">monomer1_atom_num</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">hetero</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">read</span><span class="p">:</span>
-        <span class="n">tcal</span><span class="o">.</span><span class="n">create_monomer_file</span><span class="p">()</span>
+        <span class="c1"># convert xyz to gjf</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">xyz</span><span class="p">:</span>
+            <span class="n">tcal</span><span class="o">.</span><span class="n">convert_xyz_to_gjf</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="n">nprocshared</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cpu</span><span class="p">,</span> <span class="n">mem</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">mem</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">g09</span><span class="p">:</span>
-            <span class="n">gaussian_command</span> <span class="o">=</span> <span class="s1">&#39;g09&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">gaussian_command</span> <span class="o">=</span> <span class="s1">&#39;g16&#39;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">tcal</span><span class="o">.</span><span class="n">run_gaussian</span><span class="p">(</span><span class="n">gaussian_command</span><span class="p">,</span> <span class="n">skip_monomer_num</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">skip</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">read</span><span class="p">:</span>
+            <span class="n">tcal</span><span class="o">.</span><span class="n">create_monomer_file</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">()</span>
-            <span class="n">Tcal</span><span class="o">.</span><span class="n">print_timestamp</span><span class="p">()</span>
-            <span class="n">after</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Elapsed Time: </span><span class="si">{</span><span class="p">(</span><span class="n">after</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">before</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> ms&#39;</span><span class="p">)</span>
-            <span class="n">exit</span><span class="p">()</span>
+            <span class="n">gaussian_command</span> <span class="o">=</span> <span class="s1">&#39;g09&#39;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">g09</span> <span class="k">else</span> <span class="s1">&#39;g16&#39;</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">tcal</span><span class="o">.</span><span class="n">run_gaussian</span><span class="p">(</span><span class="n">gaussian_command</span><span class="p">,</span> <span class="n">skip_monomer_num</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">skip</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">()</span>
+                <span class="n">Tcal</span><span class="o">.</span><span class="n">print_timestamp</span><span class="p">()</span>
+                <span class="n">after</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Elapsed Time: </span><span class="si">{</span><span class="p">(</span><span class="n">after</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">before</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> ms&#39;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">()</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">tcal</span><span class="o">.</span><span class="n">check_extension_log</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">pyscf</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">gpu4pyscf</span><span class="p">):</span>
+            <span class="n">tcal</span><span class="o">.</span><span class="n">check_extension_log</span><span class="p">()</span>
         <span class="n">tcal</span><span class="o">.</span><span class="n">read_monomer1</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
         <span class="n">tcal</span><span class="o">.</span><span class="n">read_monomer2</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
         <span class="n">tcal</span><span class="o">.</span><span class="n">read_dimer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>

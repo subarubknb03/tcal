@@ -246,18 +246,42 @@
 <ul class="simple">
 <li><p>Python 3.9 or newer</p></li>
 <li><p>NumPy</p></li>
-<li><p>Gaussian 09 or 16</p></li>
+<li><p>PySCF</p></li>
+<li><p>Gaussian 09 or 16 (optional)</p></li>
 </ul>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The path of the Gaussian must be set.</p>
+<p>When using Gaussian, the path of the Gaussian must be set.</p>
 </div>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<section id="using-gaussian-09-or-16-or-pyscf-cpu-only">
+<h3>Using Gaussian 09 or 16, or PySCF (CPU only)<a class="headerlink" href="#using-gaussian-09-or-16-or-pyscf-cpu-only" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>yu-tcal
 </pre></div>
 </div>
+</section>
+<section id="using-gpu-acceleration-with-pyscf">
+<h3>Using GPU acceleration with PySCF<a class="headerlink" href="#using-gpu-acceleration-with-pyscf" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p>Check your installed CUDA Toolkit version:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nvcc<span class="w"> </span>--version
+</pre></div>
+</div>
+</li>
+<li><p>Install tcal with GPU acceleration:</p>
+<p>If your CUDA Toolkit version is 12.x:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>yu-tcal<span class="o">[</span>gpu4pyscf-cuda12<span class="o">]</span>
+</pre></div>
+</div>
+<p>If your CUDA Toolkit version is 11.x:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>yu-tcal<span class="o">[</span>gpu4pyscf-cuda11<span class="o">]</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
 <section id="verify-installation">
 <h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Link to this heading">¶</a></h3>
 <p>After installation, you can verify by running:</p>
@@ -312,27 +336,47 @@
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-r</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">--read</span></code></p></td>
-<td><p>Read log files without executing Gaussian.</p></td>
+<td><p>Read log/checkpoint files without executing calculations.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-x</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">--xyz</span></code></p></td>
-<td><p>Convert xyz file to gjf file.</p></td>
+<td><p>Convert xyz file to gjf file. (Gaussian only)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-M</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--method</span> <span class="pre">METHOD/BASIS</span></code></p></td>
+<td><p>Calculation method and basis set in “METHOD/BASIS” format. (default: B3LYP/6-31G(d,p))</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--cpu</span> <span class="pre">N</span></code></p></td>
+<td><p>Set the number of CPUs. (default: 4)</p></td>
 </tr>
 <tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--mem</span> <span class="pre">N</span></code></p></td>
+<td><p>Set the memory size in GB. (default: 16)</p></td>
+</tr>
+<tr class="row-even"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">--napta</span> <span class="pre">N1</span> <span class="pre">N2</span></code></p></td>
 <td><p>Perform atomic pair transfer analysis between different levels. N1 is the number of level in the first monomer. N2 is the number of level in the second monomer.</p></td>
 </tr>
-<tr class="row-even"><td></td>
+<tr class="row-odd"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">--hetero</span> <span class="pre">N</span></code></p></td>
 <td><p>Calculate the transfer integral of heterodimer. N is the number of atoms in the first monomer.</p></td>
 </tr>
-<tr class="row-odd"><td></td>
+<tr class="row-even"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">--nlevel</span> <span class="pre">N</span></code></p></td>
 <td><p>Calculate transfer integrals between different levels. N is the number of levels from HOMO-LUMO. N=0 gives all levels.</p></td>
 </tr>
-<tr class="row-even"><td></td>
+<tr class="row-odd"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">--skip</span> <span class="pre">N...</span></code></p></td>
-<td><p>Skip specified Gaussian calculation. If N is 1, skip 1st monomer calculation. If N is 2, skip 2nd monomer calculation. If N is 3, skip dimer calculation.</p></td>
+<td><p>Skip specified calculation. If N is 1, skip 1st monomer calculation. If N is 2, skip 2nd monomer calculation. If N is 3, skip dimer calculation.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--pyscf</span></code></p></td>
+<td><p>Use PySCF instead of Gaussian. Input file must be an xyz file.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--gpu4pyscf</span></code></p></td>
+<td><p>Use GPU acceleration via gpu4pyscf. (PySCF only)</p></td>
 </tr>
 </tbody>
 </table>
@@ -340,14 +384,16 @@
 </section>
 <section id="how-to-use">
 <h2>How to Use<a class="headerlink" href="#how-to-use" title="Link to this heading">¶</a></h2>
+<section id="using-gaussian">
+<h3>Using Gaussian<a class="headerlink" href="#using-gaussian" title="Link to this heading">¶</a></h3>
 <section id="create-gjf-file">
-<h3>1. Create gjf file<a class="headerlink" href="#create-gjf-file" title="Link to this heading">¶</a></h3>
+<h4>1. Create gjf file<a class="headerlink" href="#create-gjf-file" title="Link to this heading">¶</a></h4>
 <p>First of all, create a gaussian input file as follows:</p>
 <p><strong>Example:</strong> xxx.gjf</p>
 <img alt="gjf file example" src="https://raw.githubusercontent.com/matsui-lab-yamagata/tcal/main/img/gjf_file_example.png" />
 <p>The xxx part is an arbitrary string.</p>
 <section id="description-of-link-commands">
-<h4>Description of link commands<a class="headerlink" href="#description-of-link-commands" title="Link to this heading">¶</a></h4>
+<h5>Description of link commands<a class="headerlink" href="#description-of-link-commands" title="Link to this heading">¶</a></h5>
 <dl class="simple">
 <dt><strong>pop=full</strong></dt><dd><p>Required to output coefficients of basis functions, overlap matrix, and Fock matrix.</p>
 </dd>
@@ -356,7 +402,7 @@
 </dl>
 </section>
 <section id="how-to-create-a-gjf-using-mercury">
-<h4>How to create a gjf using Mercury<a class="headerlink" href="#how-to-create-a-gjf-using-mercury" title="Link to this heading">¶</a></h4>
+<h5>How to create a gjf using Mercury<a class="headerlink" href="#how-to-create-a-gjf-using-mercury" title="Link to this heading">¶</a></h5>
 <ol class="arabic">
 <li><p>Open cif file in Mercury.</p></li>
 <li><p>Display the dimer you want to calculate.</p>
@@ -368,7 +414,7 @@
 </section>
 </section>
 <section id="execute-tcal">
-<h3>2. Execute tcal<a class="headerlink" href="#execute-tcal" title="Link to this heading">¶</a></h3>
+<h4>2. Execute tcal<a class="headerlink" href="#execute-tcal" title="Link to this heading">¶</a></h4>
 <p>Suppose the directory structure is as follows:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>yyy
 └── xxx.gjf
@@ -389,7 +435,7 @@
 </ol>
 </section>
 <section id="visualization-of-molecular-orbitals">
-<h3>3. Visualization of molecular orbitals<a class="headerlink" href="#visualization-of-molecular-orbitals" title="Link to this heading">¶</a></h3>
+<h4>3. Visualization of molecular orbitals<a class="headerlink" href="#visualization-of-molecular-orbitals" title="Link to this heading">¶</a></h4>
 <ol class="arabic">
 <li><p>Execute the following command.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>-cr<span class="w"> </span>xxx.gjf
@@ -409,6 +455,34 @@
 <img alt="Visualize 4" src="https://raw.githubusercontent.com/matsui-lab-yamagata/tcal/main/img/visualize4.png" />
 </li>
 </ol>
+</section>
+</section>
+<section id="using-pyscf">
+<h3>Using PySCF<a class="headerlink" href="#using-pyscf" title="Link to this heading">¶</a></h3>
+<section id="create-xyz-file">
+<h4>1. Create xyz file<a class="headerlink" href="#create-xyz-file" title="Link to this heading">¶</a></h4>
+<p>Prepare an xyz file of the dimer structure.
+The first half of the atoms are treated as monomer 1, and the second half as monomer 2.
+For heterodimers, use the <code class="docutils literal notranslate"><span class="pre">--hetero</span> <span class="pre">N</span></code> option to specify the number of atoms in the first monomer.</p>
+</section>
+<section id="id1">
+<h4>2. Execute tcal<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>--pyscf<span class="w"> </span>-a<span class="w"> </span>xxx.xyz
+</pre></div>
+</div>
+<p>To specify a calculation method and basis set:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>--pyscf<span class="w"> </span>-M<span class="w"> </span><span class="s2">&quot;B3LYP/6-31G(d,p)&quot;</span><span class="w"> </span>-a<span class="w"> </span>xxx.xyz
+</pre></div>
+</div>
+<p>To use GPU acceleration:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>--gpu4pyscf<span class="w"> </span>-M<span class="w"> </span><span class="s2">&quot;B3LYP/6-31G(d,p)&quot;</span><span class="w"> </span>-a<span class="w"> </span>xxx.xyz
+</pre></div>
+</div>
+<p>To read from existing checkpoint files without re-running calculations:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>--pyscf<span class="w"> </span>-ar<span class="w"> </span>xxx.xyz
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 <section id="interatomic-transfer-integral">
@@ -548,11 +622,14 @@
 <li><a class="reference internal" href="#">tcal Documentation</a><ul>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#using-gaussian-09-or-16-or-pyscf-cpu-only">Using Gaussian 09 or 16, or PySCF (CPU only)</a></li>
+<li><a class="reference internal" href="#using-gpu-acceleration-with-pyscf">Using GPU acceleration with PySCF</a></li>
 <li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#options">Options</a></li>
 <li><a class="reference internal" href="#how-to-use">How to Use</a><ul>
+<li><a class="reference internal" href="#using-gaussian">Using Gaussian</a><ul>
 <li><a class="reference internal" href="#create-gjf-file">1. Create gjf file</a><ul>
 <li><a class="reference internal" href="#description-of-link-commands">Description of link commands</a></li>
 <li><a class="reference internal" href="#how-to-create-a-gjf-using-mercury">How to create a gjf using Mercury</a></li>
@@ -560,6 +637,13 @@
 </li>
 <li><a class="reference internal" href="#execute-tcal">2. Execute tcal</a></li>
 <li><a class="reference internal" href="#visualization-of-molecular-orbitals">3. Visualization of molecular orbitals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-pyscf">Using PySCF</a><ul>
+<li><a class="reference internal" href="#create-xyz-file">1. Create xyz file</a></li>
+<li><a class="reference internal" href="#id1">2. Execute tcal</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#interatomic-transfer-integral">Interatomic Transfer Integral</a></li>
