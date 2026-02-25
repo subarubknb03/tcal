@@ -625,8 +625,8 @@
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;gpu4pyscf is supported on macOS/Linux/WSL2 only.&#39;</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Install options:&#39;</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 12):  pip install yu-tcal[gpu4pyscf-cuda12]&#39;</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 11):  pip install yu-tcal[gpu4pyscf-cuda11]&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 12):  pip install &quot;yu-tcal[gpu4pyscf-cuda12]&quot;&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 11):  pip install &quot;yu-tcal[gpu4pyscf-cuda11]&quot;&#39;</span><span class="p">)</span>
                 <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">functional</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;HF&#39;</span><span class="p">:</span>
@@ -643,6 +643,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;WARNING: SCF did not converge for </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1"> calculation completed&#39;</span><span class="p">)</span>
+            <span class="n">lib</span><span class="o">.</span><span class="n">chkfile</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">chkfile</span><span class="p">,</span> <span class="s1">&#39;job_status/completed&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="n">chkfile</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">lib</span><span class="o">.</span><span class="n">chkfile</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">chkfile</span><span class="p">,</span> <span class="s1">&#39;tcal/fock&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_numpy</span><span class="p">(</span><span class="n">mf</span><span class="o">.</span><span class="n">get_fock</span><span class="p">()))</span>

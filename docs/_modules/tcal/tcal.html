@@ -312,7 +312,7 @@
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------------------&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; tcal 4.0.1 (2026/02/25) by Matsui Lab. &#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; tcal 4.0.2 (2026/02/25) by Matsui Lab. &#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------------------&#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Input File Name: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">Tcal</span><span class="o">.</span><span class="n">print_timestamp</span><span class="p">()</span>
@@ -330,9 +330,9 @@
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PySCF is supported on macOS/Linux/WSL2(Windows Subsystem for Linux) only.&#39;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Install options:&#39;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  CPU only:       pip install yu-tcal[pyscf]&#39;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 12):  pip install yu-tcal[gpu4pyscf-cuda12]&#39;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 11):  pip install yu-tcal[gpu4pyscf-cuda11]&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  CPU only:       pip install &quot;yu-tcal[pyscf]&quot;&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 12):  pip install &quot;yu-tcal[gpu4pyscf-cuda12]&quot;&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  GPU (CUDA 11):  pip install &quot;yu-tcal[gpu4pyscf-cuda11]&quot;&#39;</span><span class="p">)</span>
             <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">tcal</span> <span class="o">=</span> <span class="n">TcalPySCF</span><span class="p">(</span>
             <span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
