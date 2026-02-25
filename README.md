@@ -165,6 +165,7 @@ $$u_{\alpha \beta} \equiv \sum^{\alpha}_i \sum^{\beta}_j a^*_i b_j \frac{\braket
 # References
 [1] Veaceslav Coropceanu et al., Charge Transport in Organic Semiconductors, *Chem. Rev.* **2007**, *107*, 926-952.  
 [2] Koki Ozawa et al., Statistical analysis of interatomic transfer integrals for exploring high-mobility organic semiconductors, *Sci. Technol. Adv. Mater.* **2024**, *25*, 2354652.  
+[3] Qiming Sun et al., Recent developments in the PySCF program package, *J. Chem. Phys.* **2020**, *153*, 024109.  
 
 # Citation
 When publishing works that benefited from tcal, please cite the following article.  
