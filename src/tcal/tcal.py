@@ -79,7 +79,7 @@ def main():
     args = parser.parse_args()
 
     print('----------------------------------------')
-    print(' tcal 4.0.0 (2026/02/25) by Matsui Lab. ')
+    print(' tcal 4.0.1 (2026/02/25) by Matsui Lab. ')
     print('----------------------------------------')
     print(f'\nInput File Name: {args.file}')
     Tcal.print_timestamp()
