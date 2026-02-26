@@ -79,7 +79,7 @@ def main():
     args = parser.parse_args()
 
     print('----------------------------------------')
-    print(' tcal 4.0.2 (2026/02/25) by Matsui Lab. ')
+    print(' tcal 4.0.3 (2026/02/26) by Matsui Lab. ')
     print('----------------------------------------')
     print(f'\nInput File Name: {args.file}')
     Tcal.print_timestamp()
@@ -188,9 +188,9 @@ class Tcal:
             If monomer1_atom_num is -1, it is half the number of atoms in the dimer.
         """
         if platform.system() == 'Windows':
-            self._extension_log = '.out'
+            self.extension_log = '.out'
         else:
-            self._extension_log = '.log'
+            self.extension_log = '.log'
 
         self._base_path = os.path.splitext(file)[0]
         self.monomer1_atom_num = monomer1_atom_num
@@ -484,9 +484,9 @@ class Tcal:
     def check_extension_log(self) -> None:
         """Check the extension of log file."""
         if os.path.exists(f'{self._base_path}.out'):
-            self._extension_log = '.out'
+            self.extension_log = '.out'
         else :
-            self._extension_log = '.log'
+            self.extension_log = '.log'
 
     def convert_xyz_to_gjf(
         self,
@@ -851,8 +851,8 @@ class Tcal:
         output_matrix : bool
             If it is True, Output MO coefficients., default False
         """
-        print(f'reading {self._base_path}_m1{self._extension_log}')
-        with open(f'{self._base_path}_m1{self._extension_log}', 'r', encoding='utf-8') as f:
+        print(f'reading {self._base_path}_m1{self.extension_log}')
+        with open(f'{self._base_path}_m1{self.extension_log}', 'r', encoding='utf-8') as f:
             f = self.check_normal_termination(f)
             while True:
                 line = f.readline()
@@ -896,8 +896,8 @@ class Tcal:
         output_matrix : bool, optional
             If it is True, Output MO coefficients., default False
         """
-        print(f'reading {self._base_path}_m2{self._extension_log}')
-        with open(f'{self._base_path}_m2{self._extension_log}', 'r', encoding='utf-8') as f:
+        print(f'reading {self._base_path}_m2{self.extension_log}')
+        with open(f'{self._base_path}_m2{self.extension_log}', 'r', encoding='utf-8') as f:
             f = self.check_normal_termination(f)
             while True:
                 line = f.readline()
@@ -941,8 +941,8 @@ class Tcal:
         output_matrix : bool
             If it is True, Output overlap and fock matrix., default False
         """
-        print(f'reading {self._base_path}{self._extension_log}')
-        with open(f'{self._base_path}{self._extension_log}', 'r', encoding='utf-8') as f:
+        print(f'reading {self._base_path}{self.extension_log}')
+        with open(f'{self._base_path}{self.extension_log}', 'r', encoding='utf-8') as f:
             f = self.check_normal_termination(f)
             while True:
                 line = f.readline()
@@ -1109,7 +1109,7 @@ class Tcal:
         else:
             print(complete_message)
             base_path = os.path.splitext(command_list[-1])[0]
-            print(f' {base_path}{self._extension_log}')
+            print(f' {base_path}{self.extension_log}')
 
         return res
 

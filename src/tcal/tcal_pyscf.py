@@ -64,6 +64,7 @@ class TcalPySCF(Tcal):
         self._ncore = ncore
         self._max_memory_gb = max_memory_gb
         self._cart = cart
+        self.extension_log = '.chk'
 
     def create_cube_file(self) -> None:
         """Generate NHOMO/HOMO/LUMO/NLUMO cube files for both monomers."""
