@@ -1,8 +1,8 @@
 [project]
 name = "yu-tcal"
-version = "4.1.0"
+version = "5.0.0"
 description = "Add your description here"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 dependencies = [
     "numpy>=2.0.2",
 ]
@@ -44,7 +44,7 @@ dev = [
 ]
 
 [tool.taskipy.tasks]
-docs-generate = "sphinx-apidoc -f -o docs-src/source src && sphinx-build -M clean docs-src/source docs && sphinx-build -b html docs-src/source docs && touch docs/.nojekyll"
+generate-docs = "sphinx-apidoc -f -o docs-src/source src && sphinx-build -M clean docs-src/source docs && sphinx-build -b html docs-src/source docs && touch docs/.nojekyll"
 
 [project.scripts]
 tcal = "tcal.tcal:main"
@@ -65,6 +65,15 @@ gpu4pyscf-cuda12 = [
     "pyscf>=2.12.1",
     "cutensor-cu12>=2.5.0",
     "gpu4pyscf-cuda12x>=1.5.2",
+]
+gpu4pyscf-cuda13 = [
+    "basis-set-exchange>=0.12",
+    "cutensor-cu13>=2.6.0",
+    "gpu4pyscf-cuda13x>=1.7.0",
+    "pyscf>=2.12.1",
+]
+orca = [
+    "orca-pi",
 ]
 
 [tool.setuptools.packages.find]

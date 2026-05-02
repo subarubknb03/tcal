@@ -1,7 +1,15 @@
 from .tcal import Tcal, PairAnalysis
 
+__all__ = ["Tcal", "PairAnalysis"]
+
 try:
     from .tcal_pyscf import TcalPySCF
-    __all__ = ["Tcal", "PairAnalysis", "TcalPySCF"]
+    __all__.append("TcalPySCF")
 except ImportError:
-    __all__ = ["Tcal", "PairAnalysis"]
+    pass
+
+try:
+    from .tcal_orca import TcalORCA
+    __all__.append("TcalORCA")
+except ImportError:
+    pass
