@@ -2,7 +2,7 @@
 tcal Documentation
 ===========================================================
 
-.. image:: https://img.shields.io/badge/python-3.9%20or%20newer-blue
+.. image:: https://img.shields.io/badge/python-3.11%20or%20newer-blue
    :target: https://www.python.org
    :alt: Python
 
@@ -13,16 +13,20 @@ tcal Documentation
 Requirements
 ============
 
-* Python 3.9 or newer
+* Python 3.11 or newer
 * NumPy
 * Gaussian 09 or 16 (optional)
 * PySCF (optional, macOS / Linux / WSL2(Windows Subsystem for Linux))
+* ORCA (optional)
 
 .. important::
    When using Gaussian, the path of the Gaussian must be set.
 
 .. important::
    PySCF is supported on macOS and Linux. Windows users must use WSL2.
+
+.. important::
+   When using ORCA, ORCA must be installed. To perform parallel calculations with ORCA, OpenMPI must be configured.
 
 Installation
 ============
@@ -51,6 +55,12 @@ Using GPU acceleration with PySCF (macOS / Linux / WSL2)
       nvcc --version
 
 2. Install tcal with GPU acceleration:
+
+   If your CUDA Toolkit version is 13.x:
+
+   .. code-block:: bash
+
+      pip install "yu-tcal[gpu4pyscf-cuda13]"
 
    If your CUDA Toolkit version is 12.x:
 
@@ -140,6 +150,9 @@ Options
    * -
      - ``--bse``
      - Use Basis Set Exchange to obtain basis sets. Allows use of basis sets not included in PySCF. (PySCF only)
+   * -
+     - ``--mpi PATH``
+     - Path to OpenMPI installation directory for ORCA parallel execution (sets ``OPI_MPI`` environment variable). (ORCA only)
 
 How to Use
 ==========
@@ -273,6 +286,89 @@ To read from existing checkpoint files without re-running calculations:
 
    tcal --pyscf -ar xxx.xyz
 
+Using ORCA
+----------
+
+1. Create xyz file
+~~~~~~~~~~~~~~~~~~~
+
+Prepare an xyz file of the dimer structure.
+The first half of the atoms are treated as monomer 1, and the second half as monomer 2.
+For heterodimers, use the ``--hetero N`` option to specify the number of atoms in the first monomer.
+
+2. Execute tcal
+~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   tcal --orca -a xxx.xyz
+
+To specify a calculation method and basis set:
+
+.. code-block:: bash
+
+   tcal --orca -M "B3LYP/6-31G(d,p)" -a xxx.xyz
+
+To read from existing output files without re-running calculations:
+
+.. code-block:: bash
+
+   tcal --orca -ar xxx.xyz
+
+3. Parallel execution
+~~~~~~~~~~~~~~~~~~~~~~
+
+To use multiple CPU cores (``--cpu N``), OpenMPI must be installed.
+First, confirm that ``mpirun`` is available:
+
+.. code-block:: bash
+
+   which mpirun
+
+If OpenMPI is already in ``$PATH`` and ``$LD_LIBRARY_PATH`` (common on Linux/WSL after ``apt install``), no further configuration is needed.
+
+If parallel execution does not work, find the OpenMPI base directory (the directory that contains ``bin/`` and ``lib/``) and pass it via ``OPI_MPI`` or ``--mpi``.
+
+**Linux / WSL**
+
+.. important::
+   ORCA requires a specific version of OpenMPI. The version available via ``apt`` may not match.
+   If parallel execution fails, it is recommended to build OpenMPI from source using the version
+   specified in the `ORCA documentation <https://www.faccts.de/docs/orca/6.0/manual/>`_.
+
+When ``mpirun`` is installed under a dedicated directory (e.g., built from source or via a module system):
+
+.. code-block:: bash
+
+   which mpirun
+   # e.g., /opt/openmpi/bin/mpirun  →  base: /opt/openmpi
+   export OPI_MPI=$(dirname $(dirname $(which mpirun)))
+
+When installed system-wide via ``apt`` (Ubuntu/Debian), ``mpirun`` is typically at ``/usr/bin/mpirun``
+but the OpenMPI libraries live under ``/usr/lib/``. Check with:
+
+.. code-block:: bash
+
+   which mpirun
+   # /usr/bin/mpirun  →  base is usually /usr/lib/x86_64-linux-gnu/openmpi
+   export OPI_MPI=/usr/lib/x86_64-linux-gnu/openmpi
+
+**macOS (Homebrew)**
+
+.. code-block:: bash
+
+   which mpirun
+   # e.g., /opt/homebrew/bin/mpirun
+   export OPI_MPI=$(brew --prefix open-mpi)
+
+**Passing the path with** ``--mpi``
+
+Instead of setting the environment variable, you can pass the path directly:
+
+.. code-block:: bash
+
+   tcal --orca --cpu 8 --mpi /path/to/openmpi -a xxx.xyz
+
 Interatomic Transfer Integral
 ==============================
 
@@ -316,6 +412,8 @@ References
 [3] Qiming Sun et al., Recent developments in the PySCF program package, *J. Chem. Phys.* **2020**, *153*, 024109.
 
 [4] Benjamin P. Pritchard et al., New Basis Set Exchange: An Open, Up-to-Date Resource for the Molecular Sciences Community, *J. Chem. Inf. Model.* **2019**, *59*, 4814-4820.
+
+[5] Frank Neese, The ORCA program system, *Wiley Interdiscip. Rev. Comput. Mol. Sci.*, **2012**, *2*, 73-78.
 
 Citation
 ========

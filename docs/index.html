@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="src" href="modules.html">
 
-    <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>tcal documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
@@ -237,17 +237,18 @@
         <article role="main" id="furo-main-content">
           <section id="tcal-documentation">
 <h1>tcal Documentation<a class="headerlink" href="#tcal-documentation" title="Link to this heading">¶</a></h1>
-<a class="reference external image-reference" href="https://www.python.org"><img alt="Python" src="https://img.shields.io/badge/python-3.9%20or%20newer-blue" />
+<a class="reference external image-reference" href="https://www.python.org"><img alt="Python" src="https://img.shields.io/badge/python-3.11%20or%20newer-blue" />
 </a>
 <a class="reference external image-reference" href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" />
 </a>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Python 3.9 or newer</p></li>
+<li><p>Python 3.11 or newer</p></li>
 <li><p>NumPy</p></li>
 <li><p>Gaussian 09 or 16 (optional)</p></li>
 <li><p>PySCF (optional, macOS / Linux / WSL2(Windows Subsystem for Linux))</p></li>
+<li><p>ORCA (optional)</p></li>
 </ul>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -256,6 +257,10 @@
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>PySCF is supported on macOS and Linux. Windows users must use WSL2.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When using ORCA, ORCA must be installed. To perform parallel calculations with ORCA, OpenMPI must be configured.</p>
 </div>
 </section>
 <section id="installation">
@@ -281,6 +286,10 @@
 </div>
 </li>
 <li><p>Install tcal with GPU acceleration:</p>
+<p>If your CUDA Toolkit version is 13.x:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;yu-tcal[gpu4pyscf-cuda13]&quot;</span>
+</pre></div>
+</div>
 <p>If your CUDA Toolkit version is 12.x:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;yu-tcal[gpu4pyscf-cuda12]&quot;</span>
 </pre></div>
@@ -392,6 +401,10 @@
 <td><p><code class="docutils literal notranslate"><span class="pre">--bse</span></code></p></td>
 <td><p>Use Basis Set Exchange to obtain basis sets. Allows use of basis sets not included in PySCF. (PySCF only)</p></td>
 </tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--mpi</span> <span class="pre">PATH</span></code></p></td>
+<td><p>Path to OpenMPI installation directory for ORCA parallel execution (sets <code class="docutils literal notranslate"><span class="pre">OPI_MPI</span></code> environment variable). (ORCA only)</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -502,6 +515,70 @@ For heterodimers, use the <code class="docutils literal notranslate"><span class
 </div>
 </section>
 </section>
+<section id="using-orca">
+<h3>Using ORCA<a class="headerlink" href="#using-orca" title="Link to this heading">¶</a></h3>
+<section id="id2">
+<h4>1. Create xyz file<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<p>Prepare an xyz file of the dimer structure.
+The first half of the atoms are treated as monomer 1, and the second half as monomer 2.
+For heterodimers, use the <code class="docutils literal notranslate"><span class="pre">--hetero</span> <span class="pre">N</span></code> option to specify the number of atoms in the first monomer.</p>
+</section>
+<section id="id3">
+<h4>2. Execute tcal<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>--orca<span class="w"> </span>-a<span class="w"> </span>xxx.xyz
+</pre></div>
+</div>
+<p>To specify a calculation method and basis set:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>--orca<span class="w"> </span>-M<span class="w"> </span><span class="s2">&quot;B3LYP/6-31G(d,p)&quot;</span><span class="w"> </span>-a<span class="w"> </span>xxx.xyz
+</pre></div>
+</div>
+<p>To read from existing output files without re-running calculations:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>--orca<span class="w"> </span>-ar<span class="w"> </span>xxx.xyz
+</pre></div>
+</div>
+</section>
+<section id="parallel-execution">
+<h4>3. Parallel execution<a class="headerlink" href="#parallel-execution" title="Link to this heading">¶</a></h4>
+<p>To use multiple CPU cores (<code class="docutils literal notranslate"><span class="pre">--cpu</span> <span class="pre">N</span></code>), OpenMPI must be installed.
+First, confirm that <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> is available:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>mpirun
+</pre></div>
+</div>
+<p>If OpenMPI is already in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">$LD_LIBRARY_PATH</span></code> (common on Linux/WSL after <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">install</span></code>), no further configuration is needed.</p>
+<p>If parallel execution does not work, find the OpenMPI base directory (the directory that contains <code class="docutils literal notranslate"><span class="pre">bin/</span></code> and <code class="docutils literal notranslate"><span class="pre">lib/</span></code>) and pass it via <code class="docutils literal notranslate"><span class="pre">OPI_MPI</span></code> or <code class="docutils literal notranslate"><span class="pre">--mpi</span></code>.</p>
+<p><strong>Linux / WSL</strong></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>ORCA requires a specific version of OpenMPI. The version available via <code class="docutils literal notranslate"><span class="pre">apt</span></code> may not match.
+If parallel execution fails, it is recommended to build OpenMPI from source using the version
+specified in the <a class="reference external" href="https://www.faccts.de/docs/orca/6.0/manual/">ORCA documentation</a>.</p>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> is installed under a dedicated directory (e.g., built from source or via a module system):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>mpirun
+<span class="c1"># e.g., /opt/openmpi/bin/mpirun  →  base: /opt/openmpi</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPI_MPI</span><span class="o">=</span><span class="k">$(</span>dirname<span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>mpirun<span class="k">)))</span>
+</pre></div>
+</div>
+<p>When installed system-wide via <code class="docutils literal notranslate"><span class="pre">apt</span></code> (Ubuntu/Debian), <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> is typically at <code class="docutils literal notranslate"><span class="pre">/usr/bin/mpirun</span></code>
+but the OpenMPI libraries live under <code class="docutils literal notranslate"><span class="pre">/usr/lib/</span></code>. Check with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>mpirun
+<span class="c1"># /usr/bin/mpirun  →  base is usually /usr/lib/x86_64-linux-gnu/openmpi</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPI_MPI</span><span class="o">=</span>/usr/lib/x86_64-linux-gnu/openmpi
+</pre></div>
+</div>
+<p><strong>macOS (Homebrew)</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>mpirun
+<span class="c1"># e.g., /opt/homebrew/bin/mpirun</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPI_MPI</span><span class="o">=</span><span class="k">$(</span>brew<span class="w"> </span>--prefix<span class="w"> </span>open-mpi<span class="k">)</span>
+</pre></div>
+</div>
+<p><strong>Passing the path with</strong> <code class="docutils literal notranslate"><span class="pre">--mpi</span></code></p>
+<p>Instead of setting the environment variable, you can pass the path directly:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>--orca<span class="w"> </span>--cpu<span class="w"> </span><span class="m">8</span><span class="w"> </span>--mpi<span class="w"> </span>/path/to/openmpi<span class="w"> </span>-a<span class="w"> </span>xxx.xyz
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 <section id="interatomic-transfer-integral">
 <h2>Interatomic Transfer Integral<a class="headerlink" href="#interatomic-transfer-integral" title="Link to this heading">¶</a></h2>
@@ -537,6 +614,7 @@ For heterodimers, use the <code class="docutils literal notranslate"><span class
 <p>[2] Koki Ozawa et al., Statistical analysis of interatomic transfer integrals for exploring high-mobility organic semiconductors, <em>Sci. Technol. Adv. Mater.</em> <strong>2024</strong>, <em>25</em>, 2354652.</p>
 <p>[3] Qiming Sun et al., Recent developments in the PySCF program package, <em>J. Chem. Phys.</em> <strong>2020</strong>, <em>153</em>, 024109.</p>
 <p>[4] Benjamin P. Pritchard et al., New Basis Set Exchange: An Open, Up-to-Date Resource for the Molecular Sciences Community, <em>J. Chem. Inf. Model.</em> <strong>2019</strong>, <em>59</em>, 4814-4820.</p>
+<p>[5] Frank Neese, The ORCA program system, <em>Wiley Interdiscip. Rev. Comput. Mol. Sci.</em>, <strong>2012</strong>, <em>2</em>, 73-78.</p>
 </section>
 <section id="citation">
 <h2>Citation<a class="headerlink" href="#citation" title="Link to this heading">¶</a></h2>
@@ -665,6 +743,12 @@ For heterodimers, use the <code class="docutils literal notranslate"><span class
 <li><a class="reference internal" href="#id1">2. Execute tcal</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#using-orca">Using ORCA</a><ul>
+<li><a class="reference internal" href="#id2">1. Create xyz file</a></li>
+<li><a class="reference internal" href="#id3">2. Execute tcal</a></li>
+<li><a class="reference internal" href="#parallel-execution">3. Parallel execution</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#interatomic-transfer-integral">Interatomic Transfer Integral</a></li>
@@ -688,9 +772,9 @@ For heterodimers, use the <code class="docutils literal notranslate"><span class
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     </body>
 </html>

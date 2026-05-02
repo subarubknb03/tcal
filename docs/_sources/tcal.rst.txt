@@ -9,21 +9,29 @@ tcal.tcal module
 
 .. automodule:: tcal.tcal
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
+
+tcal.tcal\_orca module
+----------------------
+
+.. automodule:: tcal.tcal_orca
+   :members:
+   :show-inheritance:
+   :undoc-members:
 
 tcal.tcal\_pyscf module
 -----------------------
 
 .. automodule:: tcal.tcal_pyscf
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: tcal
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
