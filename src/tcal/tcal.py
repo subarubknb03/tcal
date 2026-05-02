@@ -79,10 +79,21 @@ def main():
     parser.add_argument(
         '--cart', help='use Cartesian basis functions (PySCF only)', action='store_true'
     )
+    parser.add_argument(
+        '--orca', help='use ORCA instead of Gaussian (input file must be an xyz file)', action='store_true'
+    )
+    parser.add_argument(
+        '--mpi',
+        help='path to OpenMPI installation directory for ORCA parallel execution '
+             '(sets OPI_MPI environment variable, ORCA only)',
+        type=str,
+        default=None,
+        metavar='PATH',
+    )
     args = parser.parse_args()
 
     print('----------------------------------------')
-    print(' tcal 4.1.0 (2026/04/08) by Matsui Lab. ')
+    print(' tcal 5.0.0 (2026/05/02) by Matsui Lab. ')
     print('----------------------------------------')
     print(f'\nInput File Name: {args.file}')
     Tcal.print_timestamp()
@@ -116,6 +127,23 @@ def main():
         )
         if not args.read:
             tcal.run_pyscf(skip_monomer_num=args.skip)
+    elif args.orca:
+        try:
+            from tcal.tcal_orca import TcalORCA
+        except ImportError:
+            print('Error: orca-pi is not installed.')
+            print('Install with: pip install "yu-tcal[orca]"')
+            exit(1)
+        tcal = TcalORCA(
+            args.file,
+            monomer1_atom_num=args.hetero,
+            method=args.method,
+            ncore=args.cpu,
+            max_memory_mb=args.mem * 1024,  # GB → MB
+            open_mpi_path=args.mpi,
+        )
+        if not args.read:
+            tcal.run_orca(skip_monomer_num=args.skip)
     else:
         tcal = Tcal(args.file, monomer1_atom_num=args.hetero)
 
@@ -137,7 +165,7 @@ def main():
                 exit()
 
     try:
-        if not (args.pyscf or args.gpu4pyscf):
+        if not (args.pyscf or args.gpu4pyscf or args.orca):
             tcal.check_extension_log()
         tcal.read_monomer1(args.matrix)
         tcal.read_monomer2(args.matrix)
