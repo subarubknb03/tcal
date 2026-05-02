@@ -74,6 +74,13 @@ Using GPU acceleration with PySCF (macOS / Linux / WSL2)
 
       pip install "yu-tcal[gpu4pyscf-cuda11]"
 
+Using ORCA
+----------
+
+.. code-block:: bash
+
+   pip install "yu-tcal[orca]"
+
 Verify Installation
 -------------------
 

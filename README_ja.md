@@ -46,6 +46,11 @@ CUDA Toolkit バージョンが 11.x の場合:
 pip install "yu-tcal[gpu4pyscf-cuda11]"
 ```
 
+## ORCA を使用する場合
+```
+pip install "yu-tcal[orca]"
+```
+
 ## インストールの確認
 インストール後、以下のコマンドで動作確認できます:
 ```
