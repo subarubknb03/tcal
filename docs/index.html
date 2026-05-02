@@ -301,6 +301,12 @@
 </li>
 </ol>
 </section>
+<section id="using-orca">
+<h3>Using ORCA<a class="headerlink" href="#using-orca" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;yu-tcal[orca]&quot;</span>
+</pre></div>
+</div>
+</section>
 <section id="verify-installation">
 <h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Link to this heading">¶</a></h3>
 <p>After installation, you can verify by running:</p>
@@ -515,16 +521,16 @@ For heterodimers, use the <code class="docutils literal notranslate"><span class
 </div>
 </section>
 </section>
-<section id="using-orca">
-<h3>Using ORCA<a class="headerlink" href="#using-orca" title="Link to this heading">¶</a></h3>
 <section id="id2">
-<h4>1. Create xyz file<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<h3>Using ORCA<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<section id="id3">
+<h4>1. Create xyz file<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
 <p>Prepare an xyz file of the dimer structure.
 The first half of the atoms are treated as monomer 1, and the second half as monomer 2.
 For heterodimers, use the <code class="docutils literal notranslate"><span class="pre">--hetero</span> <span class="pre">N</span></code> option to specify the number of atoms in the first monomer.</p>
 </section>
-<section id="id3">
-<h4>2. Execute tcal<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
+<section id="id4">
+<h4>2. Execute tcal<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tcal<span class="w"> </span>--orca<span class="w"> </span>-a<span class="w"> </span>xxx.xyz
 </pre></div>
 </div>
@@ -723,6 +729,7 @@ but the OpenMPI libraries live under <code class="docutils literal notranslate">
 <li><a class="reference internal" href="#using-gaussian-09-or-16-without-pyscf">Using Gaussian 09 or 16 (without PySCF)</a></li>
 <li><a class="reference internal" href="#using-pyscf-cpu-only-macos-linux-wsl2">Using PySCF (CPU only, macOS / Linux / WSL2)</a></li>
 <li><a class="reference internal" href="#using-gpu-acceleration-with-pyscf-macos-linux-wsl2">Using GPU acceleration with PySCF (macOS / Linux / WSL2)</a></li>
+<li><a class="reference internal" href="#using-orca">Using ORCA</a></li>
 <li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
 </ul>
 </li>
@@ -743,9 +750,9 @@ but the OpenMPI libraries live under <code class="docutils literal notranslate">
 <li><a class="reference internal" href="#id1">2. Execute tcal</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#using-orca">Using ORCA</a><ul>
-<li><a class="reference internal" href="#id2">1. Create xyz file</a></li>
-<li><a class="reference internal" href="#id3">2. Execute tcal</a></li>
+<li><a class="reference internal" href="#id2">Using ORCA</a><ul>
+<li><a class="reference internal" href="#id3">1. Create xyz file</a></li>
+<li><a class="reference internal" href="#id4">2. Execute tcal</a></li>
 <li><a class="reference internal" href="#parallel-execution">3. Parallel execution</a></li>
 </ul>
 </li>

@@ -46,6 +46,11 @@ If your CUDA Toolkit version is 11.x, install tcal with GPU acceleration:
 pip install "yu-tcal[gpu4pyscf-cuda11]"
 ```
 
+## Using ORCA
+```
+pip install "yu-tcal[orca]"
+```
+
 ## Verify Installation
 After installation, you can verify by running:
 ```
