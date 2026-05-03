@@ -8,7 +8,7 @@
 * NumPy
 * Gaussian 09 または 16（オプション）
 * PySCF（オプション、macOS / Linux / WSL2 (Windows Subsystem for Linux)）
-* ORCA（オプション）
+* ORCA 6.1.0 以上（オプション）
 
 # 重要事項
 * Gaussian を使用する場合は、Gaussian のパスを設定してください。
