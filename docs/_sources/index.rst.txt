@@ -17,7 +17,7 @@ Requirements
 * NumPy
 * Gaussian 09 or 16 (optional)
 * PySCF (optional, macOS / Linux / WSL2(Windows Subsystem for Linux))
-* ORCA (optional)
+* ORCA 6.1.0 or newer (optional)
 
 .. important::
    When using Gaussian, the path of the Gaussian must be set.
